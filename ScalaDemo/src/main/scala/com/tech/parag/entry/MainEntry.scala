@@ -1,0 +1,25 @@
+package com.tech.parag.entry
+
+import com.tech.parag.session.SparkSessionDemo;
+
+object MainEntry {
+  
+  def main(args : Array[String]): Unit = {
+    val spark = SparkSessionDemo.sparkSession()
+    import spark.implicits._
+    
+    // Employee Data
+    val empDF = Seq((8, "John" , 1),(64, "Mike", 2), (27, "Garner", 1)).toDF("EmpId", "EmpName" , "DepId")
+    empDF.show()
+    
+    // Department Data
+    val depDF = Seq((1,"IT"),(2,"ACCOUNTS")).toDF("DepId" , "DepName")
+    depDF.show()
+    
+    // Joined Data
+    val resultant = empDF.join(depDF, "DepId").select($"EmpName", $"DepName")
+    resultant.show()
+    
+    println("Finishing the entry point --------------->")
+  }
+}
